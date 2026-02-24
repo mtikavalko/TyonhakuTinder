@@ -76,16 +76,6 @@ function match(seekers, jobs, topN) {
   return all.sort((a, b) => b.score - a.score).slice(0, topN);
 }
 
-const seekersEl = document.querySelector("#seekers");
-const employersEl = document.querySelector("#employers");
-const matchesEl = document.querySelector("#matches");
-const btn = document.querySelector("#generateDataBtn");
-const matchCountEl = document.querySelector("#matchCount");
-const swipeCardEl = document.querySelector("#swipeCard");
-const swipeStatsEl = document.querySelector("#swipeStats");
-const acceptBtn = document.querySelector("#acceptBtn");
-const rejectBtn = document.querySelector("#rejectBtn");
-
 function renderCard(el, html) {
   const div = document.createElement("div");
   div.className = "card";
@@ -93,79 +83,102 @@ function renderCard(el, html) {
   el.appendChild(div);
 }
 
-function renderSwipeCard() {
-  const job = currentJobs[swipeIndex];
-  if (!job) {
-    swipeCardEl.innerHTML = "<strong>Ei enempää keikkoja juuri nyt.</strong><div class='small'>Generoi uusi datasetti nähdäksesi lisää.</div>";
-  } else {
-    swipeCardEl.innerHTML = `
-      <div class="pill">${swipeIndex + 1}/${currentJobs.length}</div>
-      <strong>${job.title}</strong>
-      <div class="small">${job.employer} · ${job.city}, ${job.area}</div>
-      <div class="small">${job.pay} €/h · vuoro: ${job.shift}</div>
-      <div class="tags">${job.required.map((x) => `<span class="tag">${x}</span>`).join("")}</div>
-    `;
+function initApp() {
+  const seekersEl = document.querySelector("#seekers");
+  const employersEl = document.querySelector("#employers");
+  const matchesEl = document.querySelector("#matches");
+  const btn = document.querySelector("#generateDataBtn");
+  const matchCountEl = document.querySelector("#matchCount");
+  const swipeCardEl = document.querySelector("#swipeCard");
+  const swipeStatsEl = document.querySelector("#swipeStats");
+  const acceptBtn = document.querySelector("#acceptBtn");
+  const rejectBtn = document.querySelector("#rejectBtn");
+
+  if (!seekersEl || !employersEl || !matchesEl || !btn || !matchCountEl || !swipeCardEl || !swipeStatsEl || !acceptBtn || !rejectBtn) {
+    console.error("KeikkaMatch: kaikkia tarvittavia DOM-elementtejä ei löytynyt.");
+    return;
   }
-  swipeStatsEl.textContent = `Tykkäykset: ${accepted} · Ohitukset: ${rejected}`;
-}
 
-function swipe(direction) {
-  if (!currentJobs[swipeIndex]) return;
-  if (direction === "accept") accepted += 1;
-  if (direction === "reject") rejected += 1;
-  swipeIndex += 1;
-  renderSwipeCard();
-}
+  function renderSwipeCard() {
+    const job = currentJobs[swipeIndex];
+    if (!job) {
+      swipeCardEl.innerHTML = "<strong>Ei enempää keikkoja juuri nyt.</strong><div class='small'>Generoi uusi datasetti nähdäksesi lisää.</div>";
+    } else {
+      swipeCardEl.innerHTML = `
+        <div class="pill">${swipeIndex + 1}/${currentJobs.length}</div>
+        <strong>${job.title}</strong>
+        <div class="small">${job.employer} · ${job.city}, ${job.area}</div>
+        <div class="small">${job.pay} €/h · vuoro: ${job.shift}</div>
+        <div class="tags">${job.required.map((x) => `<span class="tag">${x}</span>`).join("")}</div>
+      `;
+    }
+    swipeStatsEl.textContent = `Tykkäykset: ${accepted} · Ohitukset: ${rejected}`;
+  }
 
-function render() {
-  const seekers = generateSeekers();
-  const jobs = generateJobs();
-  const matches = match(seekers, jobs, Number(matchCountEl.value));
+  function swipe(direction) {
+    if (!currentJobs[swipeIndex]) return;
+    if (direction === "accept") accepted += 1;
+    if (direction === "reject") rejected += 1;
+    swipeIndex += 1;
+    renderSwipeCard();
+  }
 
-  currentJobs = jobs;
-  swipeIndex = 0;
-  accepted = 0;
-  rejected = 0;
+  function render() {
+    const seekers = generateSeekers();
+    const jobs = generateJobs();
+    const matches = match(seekers, jobs, Number(matchCountEl.value));
 
-  seekersEl.innerHTML = "";
-  employersEl.innerHTML = "";
-  matchesEl.innerHTML = "";
+    currentJobs = jobs;
+    swipeIndex = 0;
+    accepted = 0;
+    rejected = 0;
 
-  seekers.forEach((s) => {
-    renderCard(seekersEl, `
-      <strong>${s.name}, ${s.age}</strong>
-      <div class="small">${s.city}, ${s.area} · Saatavuus: ${s.availability.join(", ")}</div>
-      <div class="tags">${s.skills.map((x) => `<span class="tag">${x}</span>`).join("")}</div>
-    `);
+    seekersEl.innerHTML = "";
+    employersEl.innerHTML = "";
+    matchesEl.innerHTML = "";
+
+    seekers.forEach((s) => {
+      renderCard(seekersEl, `
+        <strong>${s.name}, ${s.age}</strong>
+        <div class="small">${s.city}, ${s.area} · Saatavuus: ${s.availability.join(", ")}</div>
+        <div class="tags">${s.skills.map((x) => `<span class="tag">${x}</span>`).join("")}</div>
+      `);
+    });
+
+    jobs.forEach((j) => {
+      renderCard(employersEl, `
+        <strong>${j.title}</strong>
+        <div class="small">${j.employer} · ${j.city}, ${j.area} · ${j.pay} €/h · vuoro: ${j.shift}</div>
+        <div class="tags">${j.required.map((x) => `<span class="tag">${x}</span>`).join("")}</div>
+      `);
+    });
+
+    matches.forEach((m) => {
+      renderCard(matchesEl, `
+        <div><strong>${m.seeker.name}</strong> ↔ <strong>${m.job.employer}</strong></div>
+        <div class="small">${m.job.title} (${m.job.city}, ${m.job.area})</div>
+        <div class="score">Match score: ${m.score}</div>
+      `);
+    });
+
+    renderSwipeCard();
+  }
+
+  btn.addEventListener("click", render);
+  matchCountEl.addEventListener("change", render);
+  acceptBtn.addEventListener("click", () => swipe("accept"));
+  rejectBtn.addEventListener("click", () => swipe("reject"));
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") swipe("accept");
+    if (e.key === "ArrowLeft") swipe("reject");
   });
 
-  jobs.forEach((j) => {
-    renderCard(employersEl, `
-      <strong>${j.title}</strong>
-      <div class="small">${j.employer} · ${j.city}, ${j.area} · ${j.pay} €/h · vuoro: ${j.shift}</div>
-      <div class="tags">${j.required.map((x) => `<span class="tag">${x}</span>`).join("")}</div>
-    `);
-  });
-
-  matches.forEach((m) => {
-    renderCard(matchesEl, `
-      <div><strong>${m.seeker.name}</strong> ↔ <strong>${m.job.employer}</strong></div>
-      <div class="small">${m.job.title} (${m.job.city}, ${m.job.area})</div>
-      <div class="score">Match score: ${m.score}</div>
-    `);
-  });
-
-  renderSwipeCard();
+  render();
 }
 
-btn.addEventListener("click", render);
-matchCountEl.addEventListener("change", render);
-acceptBtn.addEventListener("click", () => swipe("accept"));
-rejectBtn.addEventListener("click", () => swipe("reject"));
-
-window.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowRight") swipe("accept");
-  if (e.key === "ArrowLeft") swipe("reject");
-});
-
-render();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
+} else {
+  initApp();
+}
