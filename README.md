@@ -4,16 +4,13 @@ Pieni selaindemo "keikkatyönhaun Tinder" -ideasta.
 
 ## Käynnistys
 
-Voit avata demon kahdella tavalla:
-
-1. **Ilman terminaalia (helpoin):** avaa projektin `index.html` suoraan selaimessa (tuplaklikkaa tiedostoa).
-2. **Terminaalilla (suositeltu, jos haluat localhost-URL:n):**
+Avaa `index.html` selaimessa tai aja paikallinen palvelin:
 
 ```bash
-./preview.sh
+python3 -m http.server 8000
 ```
 
-Sitten avaa `http://localhost:8000/index.html`.
+Sitten avaa `http://localhost:8000`.
 
 ## Mitä demo tekee
 
@@ -27,17 +24,6 @@ Sitten avaa `http://localhost:8000/index.html`.
 
 Nopea käytännön preview:
 
-1. Käynnistä palvelin: `./preview.sh`
-2. Avaa selaimessa: `http://localhost:8000/index.html`
+1. Käynnistä paikallinen palvelin: `python3 -m http.server 8000`
+2. Avaa selaimessa: `http://localhost:8000`
 3. Testaa swipea napeilla tai nuolinäppäimillä (⬅️ hylkää, ➡️ kiinnostaa)
-
-### Ilman terminaalia
-
-- Avaa kansio tiedostonhallinnassa.
-- Tuplaklikkaa `index.html` (tai vedä tiedosto selaimeen).
-- Demo toimii myös näin, koska se on täysin client-side eikä tarvitse backendiä.
-
-### Jos näet "Not found"
-
-- Varmista, että avaat URL-osoitteen **`/index.html`** etkä satunnaista polkua.
-- Käynnistä palvelin projektin juuresta tai käytä `./preview.sh`, joka pakottaa oikean hakemiston.
