@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KeikkaMatch – Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>KeikkaMatch</h1>
+    <p>Vibekoodattu demo: espoolaiset työnhakijat ↔ espoolaiset keikkatyönantajat</p>
+  </header>
+
+  <main>
+    <section class="controls">
+      <button id="generateDataBtn">Generoi uusi datasetti</button>
+      <label>
+        Näytä
+        <select id="matchCount">
+          <option value="3">3 parasta matchia</option>
+          <option value="5" selected>5 parasta matchia</option>
+          <option value="8">8 parasta matchia</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="swipe-section">
+      <h2>Swipe-näkymä (keikat)</h2>
+      <div id="swipeCard" class="swipe-card"></div>
+      <div class="swipe-actions">
+        <button id="rejectBtn" class="ghost">👈 Hylkää</button>
+        <button id="acceptBtn">👉 Kiinnostaa</button>
+      </div>
+      <div id="swipeStats" class="small"></div>
+    </section>
+
+    <section class="grid">
+      <article>
+        <h2>Työnhakijat</h2>
+        <div id="seekers" class="card-list"></div>
+      </article>
+
+      <article>
+        <h2>Työnantajat / keikat</h2>
+        <div id="employers" class="card-list"></div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Matchit</h2>
+      <div id="matches" class="match-list"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
