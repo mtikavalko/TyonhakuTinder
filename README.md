@@ -110,3 +110,29 @@ Ota screenshot selaimen devtooleilla tai Playwrightilla ja vertaa kuvia rinnakka
 ```bash
 rg "^(<<<<<<<|=======|>>>>>>>)" index.html app.js README.md styles.css
 ```
+
+
+### Jos saat virheen `./preview.sh: No such file or directory`
+
+Tämä tarkoittaa lähes aina, että et ole projektin juurihakemistossa.
+
+1. Siirry oikeaan kansioon:
+   ```bash
+   cd /workspace/TyonhakuTinder
+   ```
+2. Varmista että skripti on olemassa:
+   ```bash
+   ls -l preview.sh
+   ```
+3. Käynnistä:
+   ```bash
+   ./preview.sh
+   ```
+
+Jos skripti ei silti käynnisty, voit käyttää suoraa fallback-komentoa:
+
+```bash
+python3 -m http.server 8000 --directory /workspace/TyonhakuTinder
+```
+
+Sitten avaa selaimessa: `http://localhost:8000/index.html`.
