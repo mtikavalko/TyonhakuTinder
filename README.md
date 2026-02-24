@@ -41,3 +41,6 @@ Nopea käytännön preview:
 
 - Varmista, että avaat URL-osoitteen **`/index.html`** etkä satunnaista polkua.
 - Käynnistä palvelin projektin juuresta tai käytä `./preview.sh`, joka pakottaa oikean hakemiston.
+1. Käynnistä paikallinen palvelin: `python3 -m http.server 8000`
+2. Avaa selaimessa: `http://localhost:8000`
+3. Testaa swipea napeilla tai nuolinäppäimillä (⬅️ hylkää, ➡️ kiinnostaa)
