@@ -36,9 +36,11 @@ Nopea käytännön preview:
 - Avaa kansio tiedostonhallinnassa.
 - Tuplaklikkaa `index.html` (tai vedä tiedosto selaimeen).
 - Demo toimii myös näin, koska se on täysin client-side eikä tarvitse backendiä.
-- `index.html` sisältää myös tarvittavan JavaScriptin, joten napit toimivat myös suoraan tiedostona avattuna.
 
 ### Jos näet "Not found"
 
 - Varmista, että avaat URL-osoitteen **`/index.html`** etkä satunnaista polkua.
 - Käynnistä palvelin projektin juuresta tai käytä `./preview.sh`, joka pakottaa oikean hakemiston.
+1. Käynnistä paikallinen palvelin: `python3 -m http.server 8000`
+2. Avaa selaimessa: `http://localhost:8000`
+3. Testaa swipea napeilla tai nuolinäppäimillä (⬅️ hylkää, ➡️ kiinnostaa)
