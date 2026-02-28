@@ -1,6 +1,6 @@
 # TyonhakuTinder
 
-Pieni selaindemo "keikkatyönhaun Tinder" -ideasta.
+Pieni selaindemo "keikkatyönhaun Tinder" -ideasta työnhakijan näkökulmasta.
 
 ## Käynnistys
 
@@ -17,7 +17,8 @@ Sitten avaa `http://localhost:8000/index.html`.
 
 ## Mitä demo tekee
 
-- Generoi espoolaisia esimerkkityönhakijoita (nuoret, taidot, saatavuus, Espoon alue)
+- Sisältää kaksi moodia: **Nuori työnhakija** ja **Työvoimaa hakeva aikuinen**
+- Näyttää yhden loppukäyttäjän (työnhakijan) profiilin ja hänelle personoidut keikkaehdotukset (tekijät 15–25 v)
 - Generoi espoolaisia esimerkkikeikkoja työnantajilta (esim. lumenluonti, muuttoapu, siivous)
 - Laskee yksinkertaisen matching-score:n taitojen, sijainnin ja vuoron perusteella
 - Sisältää swipe-näkymän, jossa keikkoja voi hyväksyä/hylätä (napit + nuolinäppäimet)
@@ -29,7 +30,9 @@ Nopea käytännön preview:
 
 1. Käynnistä palvelin: `./preview.sh`
 2. Avaa selaimessa: `http://localhost:8000/index.html`
-3. Testaa swipea napeilla tai nuolinäppäimillä (⬅️ hylkää, ➡️ kiinnostaa)
+3. Vaihda moodia yläosan painikkeista (Nuori työnhakija / Työvoimaa hakeva aikuinen)
+4. Testaa swipea napeilla tai nuolinäppäimillä (⬅️ hylkää, ➡️ kiinnostaa)
+5. Avaa tarvittaessa CSS suoraan demosta: **🎨 Avaa CSS (styles.css)**
 
 ### Ilman terminaalia
 
@@ -74,3 +77,65 @@ Jos napit eivät vieläkään toimi konfliktin jälkeen:
 - Tee hard refresh selaimessa (`Ctrl+F5` / `Cmd+Shift+R`).
 - Varmista, ettei tiedostoissa ole enää konfliktimerkintöjä.
 - Avaa preview osoitteesta `http://localhost:8000/index.html`.
+
+
+## Visuaalisen ilmeen testaus
+
+### 1) Nopea manuaalinen testi
+
+1. Käynnistä preview: `./preview.sh`
+2. Avaa: `http://localhost:8000/index.html`
+3. Tarkista ainakin nämä:
+   - taustagradientit näkyvät
+   - napit reagoivat hoveriin/klikkiin
+   - kortit ovat luettavia (teksti + kontrasti)
+   - sivu toimii sekä desktopilla että kapealla ikkunalla
+
+### 2) Suora tiedostoavaus (ilman terminaalia)
+
+- Tuplaklikkaa `index.html` tiedostonhallinnasta ja varmista, että ulkoasu ja napit toimivat myös näin.
+
+### 3) Screenshot-vertailu
+
+Jos haluat dokumentoida ilmeen ennen/jälkeen:
+
+```bash
+./preview.sh 8150
+```
+
+Ota screenshot selaimen devtooleilla tai Playwrightilla ja vertaa kuvia rinnakkain.
+
+### 4) Yleiset ongelmat
+
+- Jos näet vanhan tyylin, tee hard refresh (`Ctrl+F5` / `Cmd+Shift+R`).
+- Jos sivu on blankko tai outo, tarkista ettei tiedostoihin ole jäänyt konfliktimerkintöjä:
+
+```bash
+rg "^(<<<<<<<|=======|>>>>>>>)" index.html app.js README.md styles.css
+```
+
+
+### Jos saat virheen `./preview.sh: No such file or directory`
+
+Tämä tarkoittaa lähes aina, että et ole projektin juurihakemistossa.
+
+1. Siirry oikeaan kansioon:
+   ```bash
+   cd /workspace/TyonhakuTinder
+   ```
+2. Varmista että skripti on olemassa:
+   ```bash
+   ls -l preview.sh
+   ```
+3. Käynnistä:
+   ```bash
+   ./preview.sh
+   ```
+
+Jos skripti ei silti käynnisty, voit käyttää suoraa fallback-komentoa:
+
+```bash
+python3 -m http.server 8000 --directory /workspace/TyonhakuTinder
+```
+
+Sitten avaa selaimessa: `http://localhost:8000/index.html`.
