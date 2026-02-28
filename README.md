@@ -32,7 +32,6 @@ Nopea käytännön preview:
 2. Avaa selaimessa: `http://localhost:8000/index.html`
 3. Vaihda moodia yläosan painikkeista (Nuori työnhakija / Työvoimaa hakeva aikuinen)
 4. Testaa swipea napeilla tai nuolinäppäimillä (⬅️ hylkää, ➡️ kiinnostaa)
-5. Avaa tarvittaessa CSS suoraan demosta: **🎨 Avaa CSS (styles.css)**
 
 ### Ilman terminaalia
 
@@ -139,3 +138,33 @@ python3 -m http.server 8000 --directory /workspace/TyonhakuTinder
 ```
 
 Sitten avaa selaimessa: `http://localhost:8000/index.html`.
+
+
+## Julkaise nettiin linkillä (helpoin tapa)
+
+### Vaihtoehto A: GitHub Pages (suositus)
+
+Saat pysyvän julkisen linkin ilman palvelinta.
+
+1. Pushaa projekti GitHub-repoon.
+2. Avaa GitHubissa: **Settings → Pages**.
+3. Valitse:
+   - **Source**: `Deploy from a branch`
+   - **Branch**: `main` (tai oma branch) ja kansio `/ (root)`
+4. Tallenna.
+5. GitHub näyttää julkisen linkin, tyypillisesti:
+   - `https://<käyttäjä>.github.io/<repo>/`
+
+Jos sivu ei avaudu heti, odota 1–2 min ja päivitä selain.
+
+### Vaihtoehto B: Netlify Drop (nopein kertajako)
+
+1. Mene osoitteeseen `https://app.netlify.com/drop`.
+2. Raahaa projektikansio (tai zip) sivulle.
+3. Saat heti julkisen linkin, jonka voit jakaa muille.
+
+### Mitä linkkiä kannattaa jakaa?
+
+- Jaa ensisijaisesti `.../index.html` (tai root-linkki, jos se avaa indexin oikein).
+- Jos tyyli ei näy vastaanottajalla, pyydä hard refresh (`Ctrl+F5` / `Cmd+Shift+R`).
+

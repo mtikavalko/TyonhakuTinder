@@ -170,26 +170,6 @@ h2 {
   text-shadow: 0 0 14px rgba(34, 197, 94, 0.35);
 }
 
-.dev-links {
-  margin-top: .9rem;
-}
-
-.dev-links a {
-  display: inline-block;
-  text-decoration: none;
-  color: #e2e8ff;
-  background: rgba(124, 58, 237, 0.25);
-  border: 1px solid rgba(196, 181, 253, 0.55);
-  border-radius: .65rem;
-  padding: .45rem .7rem;
-  font-size: .9rem;
-  transition: background .2s ease, transform .15s ease;
-}
-
-.dev-links a:hover {
-  background: rgba(6, 182, 212, 0.28);
-  transform: translateY(-1px);
-}
 
 .mode-switch {
   display: flex;
