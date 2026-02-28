@@ -30,6 +30,7 @@ Nopea käytännön preview:
 1. Käynnistä palvelin: `./preview.sh`
 2. Avaa selaimessa: `http://localhost:8000/index.html`
 3. Testaa swipea napeilla tai nuolinäppäimillä (⬅️ hylkää, ➡️ kiinnostaa)
+4. Avaa tarvittaessa CSS suoraan demosta: **🎨 Avaa CSS (styles.css)**
 
 ### Ilman terminaalia
 
